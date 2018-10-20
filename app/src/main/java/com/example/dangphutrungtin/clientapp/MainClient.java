@@ -47,8 +47,8 @@ public class MainClient extends AppCompatActivity implements SignInDialog.Signin
     public static Socket mSocket;
     {
         try {
-            //mSocket = IO.socket("http://192.168.126.2:3000"); //coi chung doi mang
-            mSocket = IO.socket("http://192.168.40.182:3000");
+            mSocket = IO.socket("http://192.168.126.2:3000"); //coi chung doi mang
+            //mSocket = IO.socket("http://192.168.40.182:3000");
         } catch (URISyntaxException e) {}
     }
     ////////////////////////////////////////////////////////

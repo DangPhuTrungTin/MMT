@@ -63,13 +63,17 @@ public class User2 extends AppCompatActivity implements QuesCustomDiaLog.QuesCus
     }
     public void endsetting(View v){
         clear();
+        msocket.off("on_update_ques",on_update_ques);
+        msocket.off("on_list_questions",on_list_questions);
+        msocket.off("on_add_question",on_add_question);
         super.finish();
     }
 
     @Override
     public void applyTextsAddQues(String content, String ansA, String ansB, String ansC, String ansD, String rightAns) throws JSONException {
         try {
-            quesfullcontent.add(new Question(String.valueOf(choice), content, ansA, ansB, ansC, ansD, Integer.valueOf(rightAns)));
+            if(Integer.valueOf(rightAns)<1 || Integer.valueOf(rightAns)>4) throw new NumberFormatException();
+            quesfullcontent.add(new Question(String.valueOf(choice), content, ansA, ansB, ansC, ansD, Integer.valueOf(rightAns)-1));
             ques.add(content);
             adapter.notifyDataSetChanged();
             String[] a = {content, ansA, ansB, ansC, ansD};
@@ -85,14 +89,21 @@ public class User2 extends AppCompatActivity implements QuesCustomDiaLog.QuesCus
 
     @Override
     public void applyTexts(String content, String ansA, String ansB, String ansC, String ansD, String rightAns) throws JSONException {
-        quesfullcontent.set(choice,new Question(String.valueOf(choice),content,ansA,ansB,ansC,ansD,Integer.valueOf(rightAns)));
-        ques.set(choice,content);
-        adapter.notifyDataSetChanged();
-        String[] a={"IDquestion='"+choice,"IDset='"+IDset,"IDowner='"+IDowner};
-        String[] b={"Content='"+content,"AnsA='"+ansA,"AnsB='"+ansB,"AnsC='"+ansC,"AnsD='"+ansD,"RightAns="};
-        String where= TextUtils.join("' and ",a)+"'";
-        String set=TextUtils.join("',",b)+rightAns;
-        msocket.emit("update question",set,where);
+        try{
+            if(Integer.valueOf(rightAns)<1 || Integer.valueOf(rightAns)>4) throw new NumberFormatException();
+            quesfullcontent.set(choice,new Question(String.valueOf(choice),content,ansA,ansB,ansC,ansD,Integer.valueOf(rightAns)-1));
+            ques.set(choice,content);
+            adapter.notifyDataSetChanged();
+            String[] a={"IDquestion='"+choice,"IDset='"+IDset,"IDowner='"+IDowner};
+            String[] b={"Content='"+content,"AnsA='"+ansA,"AnsB='"+ansB,"AnsC='"+ansC,"AnsD='"+ansD,"RightAns="};
+            String where= TextUtils.join("' and ",a)+"'";
+            int right=Integer.valueOf(rightAns)-1;
+            String set=TextUtils.join("',",b)+String.valueOf(right);
+            msocket.emit("update question",set,where);
+        }
+        catch (NumberFormatException e){
+            Toast.makeText(getApplicationContext(),"Sai Corrected Answer",Toast.LENGTH_LONG).show();
+        }
     }
     private Emitter.Listener on_list_questions = new Emitter.Listener() {
         @Override
@@ -110,7 +121,7 @@ public class User2 extends AppCompatActivity implements QuesCustomDiaLog.QuesCus
                                     a.getString("AnsB"),
                                     a.getString("AnsC"),
                                     a.getString("AnsD"),
-                                    Integer.valueOf(a.getString("RightAns"))));
+                                    Integer.valueOf(a.getString("RightAns"))+1));
                             ques.add(new String(a.getString("Content")));
                             adapter.notifyDataSetChanged();
                             //Toast.makeText(getApplicationContext(),a.getString("Content"),Toast.LENGTH_LONG).show();

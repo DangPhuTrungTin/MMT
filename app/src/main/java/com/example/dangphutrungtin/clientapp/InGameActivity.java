@@ -114,7 +114,7 @@ public class InGameActivity extends AppCompatActivity {
         C.setText(ques.getAns()[2]);
         D.setText(ques.getAns()[3]);
         PBar.setProgress(100);
-        final CountDownTimer CDTimer=new CountDownTimer(1000,100) {
+        final CountDownTimer CDTimer=new CountDownTimer(10000,100) {
             @Override
             public void onTick(long millisUntilFinished) {
                 int current=PBar.getProgress();

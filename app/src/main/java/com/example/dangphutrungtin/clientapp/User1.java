@@ -51,6 +51,9 @@ public class User1 extends AppCompatActivity implements AddQuesSetDialog.AddQues
     }
 
     public void Logout(View v){
+        msocket.off("nhanpin",on_nhanpin);
+        msocket.off("on_list_ques_set",on_list_ques_set);
+        msocket.off("on_add_set",on_add_set);
         finish();
     }
     public void finish(){
@@ -124,6 +127,6 @@ public class User1 extends AppCompatActivity implements AddQuesSetDialog.AddQues
         mtitle=title;
         String[] a={title,IDuser};
         String mpackage= TextUtils.join("','",a);
-        msocket.emit("add set",mpackage);
+        msocket.emit("add set",mpackage,IDuser);
     }
 }

@@ -62,7 +62,7 @@ public class QuesCustomDiaLog extends AppCompatDialogFragment {
             editTextAnsB.setText(question.getAns()[1]);
             editTextAnsC.setText(question.getAns()[2]);
             editTextAnsD.setText(question.getAns()[3]);
-            editTextRightAns.setText(String.valueOf(question.getRightans()));
+            editTextRightAns.setText(String.valueOf(question.getRightans()+1));
         }
         return builder.create();
     }

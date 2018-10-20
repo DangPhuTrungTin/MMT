@@ -51,9 +51,10 @@ public class ResultActivity extends AppCompatActivity {
         if(Boolean.valueOf(isUser)){
             //mSocket.on("next question",on_next_question);
             NextorEndbutt.setVisibility(View.VISIBLE);
-        }
+        }else
+            mSocket.on("listen to next question",on_listen);
         mSocket.on("game finish",on_finish);
-        mSocket.on("listen to next question",on_listen);
+
         mSocket.on("receive result",on_receive);
         mSocket.emit("give me result",PIN,mProperty.countQues);
 
@@ -76,6 +77,13 @@ public class ResultActivity extends AppCompatActivity {
         super.finish();
 
     }
+    public void finish1(){
+        mSocket.off("game finish",on_finish);
+        mSocket.off("listen to next question",on_listen);
+        mSocket.off("receive result",on_receive);
+        super.finish();
+
+    }
     private Emitter.Listener on_listen = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
@@ -88,7 +96,7 @@ public class ResultActivity extends AppCompatActivity {
                     gotoIngame.putExtra("myName",myname);
                     startActivity(gotoIngame);
                     //mSocket.off("listen to next question",on_listen);
-                    finish();
+                    finish1();
                 }
             });
         }
