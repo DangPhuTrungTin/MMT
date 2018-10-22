@@ -30,7 +30,7 @@ public class SignUpDialog extends AppCompatDialogFragment {
         LayoutInflater inflater=getActivity().getLayoutInflater();
         View view=inflater.inflate(R.layout.signin,null);
         builder.setView(view)
-                .setTitle("Sign in")
+                .setTitle("Sign up")
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {

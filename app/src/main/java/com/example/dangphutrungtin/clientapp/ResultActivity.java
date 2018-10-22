@@ -58,10 +58,9 @@ public class ResultActivity extends AppCompatActivity {
         mSocket.on("receive result",on_receive);
         mSocket.emit("give me result",PIN,mProperty.countQues);
 
-
         CorrectAns=mProperty.quesfullcontent.get(mProperty.countQues).getRightans();
         mProperty.countQues++;
-        if(mProperty.countQues>=mProperty.quesfullcontent.size()) {
+        if(mProperty.countQues>=mProperty.size) {
             NextorEndbutt.setText("FINISH");
             NextorEndbutt.setVisibility(View.VISIBLE);
         }

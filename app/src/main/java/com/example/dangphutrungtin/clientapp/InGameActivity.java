@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class InGameActivity extends AppCompatActivity {
     Socket msocket=MainClient.mSocket;
-    ArrayList<Question> quesfullcontent=mProperty.quesfullcontent;
+    //ArrayList<Question> quesfullcontent=mProperty.quesfullcontent;
     //int countQues=0;
     String isUser;
     Button A;
@@ -104,7 +104,8 @@ public class InGameActivity extends AppCompatActivity {
             butt[ques.getRightans()].setBackgroundColor(Color.GREEN);
         }
         //
-        runQues(quesfullcontent);
+        runQues(mProperty.quesfullcontent);
+        //if(mProperty.countQues>=mProperty.size) finish();
     }
     public void runQues(ArrayList<Question> lst){
         final Question ques= lst.get(mProperty.countQues);
