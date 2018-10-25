@@ -37,12 +37,12 @@ public class QuesCustomDiaLog extends AppCompatDialogFragment {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
-                        String Content=editTextContent.getText().toString();
-                        String ansA=editTextAnsA.getText().toString();
-                        String ansB=editTextAnsB.getText().toString();
-                        String ansC=editTextAnsC.getText().toString();
-                        String ansD=editTextAnsD.getText().toString();
-                        String rightAns=editTextRightAns.getText().toString();
+                        String Content=editTextContent.getText().toString().trim();
+                        String ansA=editTextAnsA.getText().toString().trim();
+                        String ansB=editTextAnsB.getText().toString().trim();
+                        String ansC=editTextAnsC.getText().toString().trim();
+                        String ansD=editTextAnsD.getText().toString().trim();
+                        String rightAns=editTextRightAns.getText().toString().trim();
                         try {
                             listener.applyTexts(Content,ansA,ansB,ansC,ansD,rightAns);
                         } catch (JSONException e) {
@@ -62,7 +62,7 @@ public class QuesCustomDiaLog extends AppCompatDialogFragment {
             editTextAnsB.setText(question.getAns()[1]);
             editTextAnsC.setText(question.getAns()[2]);
             editTextAnsD.setText(question.getAns()[3]);
-            editTextRightAns.setText(String.valueOf(question.getRightans()));
+            editTextRightAns.setText(String.valueOf(question.getRightans()+1));
         }
         return builder.create();
     }

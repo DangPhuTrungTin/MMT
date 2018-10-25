@@ -42,7 +42,19 @@ public class ResultActivity extends AppCompatActivity {
         setContentView(R.layout.result);
         NextorEndbutt=(Button)findViewById(R.id.NextorEnd);
         ranklist=(ListView)findViewById(R.id.ranklist);
+
+
         graph=(GraphView)findViewById(R.id.graph);
+        graph.getGridLabelRenderer().setGridStyle( GridLabelRenderer.GridStyle.NONE );
+        graph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
+        graph.getGridLabelRenderer().setVerticalLabelsVisible(false);
+        graph.getViewport().setMinX(0);
+        graph.getViewport().setMaxX(5);
+        graph.getViewport().setMinY(0);
+        graph.getViewport().setMaxY(10);
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setXAxisBoundsManual(true);
+
 
         Intent lastintent=getIntent();
         isUser=lastintent.getStringExtra("isUser");
@@ -138,17 +150,11 @@ public class ResultActivity extends AppCompatActivity {
                                 new DataPoint(3, Integer.valueOf(chart.get(2).toString())),
                                 new DataPoint(4, Integer.valueOf(chart.get(3).toString()))
                         });
+                        graph.removeAllSeries();
                         graph.addSeries(series);
                         series.setSpacing(50);
                         series.setDrawValuesOnTop(true);
                         series.setValuesOnTopColor(Color.RED);
-                        graph.getGridLabelRenderer().setGridStyle( GridLabelRenderer.GridStyle.NONE );
-                        graph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
-                        graph.getGridLabelRenderer().setVerticalLabelsVisible(false);
-                        graph.getViewport().setMinX(0);
-                        graph.getViewport().setMaxX(5);
-                        graph.getViewport().setMinY(0);
-                        graph.getViewport().setMaxY(10);
                         series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
                             @Override
                             public int get(DataPoint data) {
@@ -157,8 +163,7 @@ public class ResultActivity extends AppCompatActivity {
                                 else return Color.rgb(141,143,138);
                             }
                         });
-                        graph.getViewport().setYAxisBoundsManual(true);
-                        graph.getViewport().setXAxisBoundsManual(true);
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

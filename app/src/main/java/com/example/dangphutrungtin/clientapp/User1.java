@@ -54,17 +54,17 @@ public class User1 extends AppCompatActivity implements AddQuesSetDialog.AddQues
         msocket.off("nhanpin",on_nhanpin);
         msocket.off("on_list_ques_set",on_list_ques_set);
         msocket.off("on_add_set",on_add_set);
+        msocket.emit("logout",IDuser);
         finish();
     }
+    @Override
     public void finish(){
         setResult(Activity.RESULT_OK);
         clear();
+        //msocket.emit("logout",IDuser);
         super.finish();
     }
-//    public void createroom(View view){
-//        //nut Play
-//        msocket.emit("createroom");
-//    }
+
     private Emitter.Listener on_nhanpin = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
@@ -124,6 +124,10 @@ public class User1 extends AppCompatActivity implements AddQuesSetDialog.AddQues
 
     @Override
     public void applyTexts(String title) throws JSONException {
+        if(title.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Khong the co khoang trong",Toast.LENGTH_LONG).show();
+            return;
+        }
         mtitle=title;
         String[] a={title,IDuser};
         String mpackage= TextUtils.join("','",a);

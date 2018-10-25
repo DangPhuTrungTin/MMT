@@ -71,6 +71,10 @@ public class User2 extends AppCompatActivity implements QuesCustomDiaLog.QuesCus
 
     @Override
     public void applyTextsAddQues(String content, String ansA, String ansB, String ansC, String ansD, String rightAns) throws JSONException {
+        if(content.isEmpty()||ansA.isEmpty()||ansB.isEmpty()||ansC.isEmpty()||ansD.isEmpty()||rightAns.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Khong the co khoang trong",Toast.LENGTH_LONG).show();
+            return;
+        }
         try {
             if(Integer.valueOf(rightAns)<1 || Integer.valueOf(rightAns)>4) throw new NumberFormatException();
             quesfullcontent.add(new Question(String.valueOf(choice), content, ansA, ansB, ansC, ansD, Integer.valueOf(rightAns)-1));
@@ -81,7 +85,8 @@ public class User2 extends AppCompatActivity implements QuesCustomDiaLog.QuesCus
             String where = "IDset='" + IDset + "' and IDowner='" + IDowner + "'";
             String c1 = "'" + TextUtils.join("','", a) + "',";
             String c3 = ",'" + TextUtils.join("','", b) + "'";
-            msocket.emit("add question", c1 + rightAns + c3, where);
+            String right=String.valueOf(Integer.valueOf(rightAns)-1);
+            msocket.emit("add question", c1 + right + c3, where);
         }catch (NumberFormatException e){
             Toast.makeText(getApplicationContext(),"Sai Corrected Answer",Toast.LENGTH_LONG).show();
         }
@@ -89,6 +94,10 @@ public class User2 extends AppCompatActivity implements QuesCustomDiaLog.QuesCus
 
     @Override
     public void applyTexts(String content, String ansA, String ansB, String ansC, String ansD, String rightAns) throws JSONException {
+        if(content.isEmpty()||ansA.isEmpty()||ansB.isEmpty()||ansC.isEmpty()||ansD.isEmpty()||rightAns.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Khong the co khoang trong", Toast.LENGTH_LONG).show();
+            return;
+        }
         try{
             if(Integer.valueOf(rightAns)<1 || Integer.valueOf(rightAns)>4) throw new NumberFormatException();
             quesfullcontent.set(choice,new Question(String.valueOf(choice),content,ansA,ansB,ansC,ansD,Integer.valueOf(rightAns)-1));
@@ -121,7 +130,7 @@ public class User2 extends AppCompatActivity implements QuesCustomDiaLog.QuesCus
                                     a.getString("AnsB"),
                                     a.getString("AnsC"),
                                     a.getString("AnsD"),
-                                    Integer.valueOf(a.getString("RightAns"))+1));
+                                    Integer.valueOf(a.getString("RightAns"))));
                             ques.add(new String(a.getString("Content")));
                             adapter.notifyDataSetChanged();
                             //Toast.makeText(getApplicationContext(),a.getString("Content"),Toast.LENGTH_LONG).show();
