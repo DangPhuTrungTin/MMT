@@ -43,7 +43,7 @@ public class InGameActivity extends AppCompatActivity {
         Intent lastintent=getIntent();
         PIN=lastintent.getStringExtra("PIN");
         isUser=lastintent.getStringExtra("isUser");
-        myname=lastintent.getStringExtra("myName");
+        myname=lastintent.getStringExtra("myname");
         //Toast.makeText(this,"con ddm"+myname,Toast.LENGTH_LONG).show();
         Question=(TextView)findViewById(R.id.question);
         PBar=(ProgressBar)findViewById(R.id.progressBar);
@@ -52,56 +52,56 @@ public class InGameActivity extends AppCompatActivity {
         C=(Button) findViewById(R.id.C);
         D=(Button) findViewById(R.id.D);
         Button[] butt=new Button[]{A,B,C,D};
-        A.setBackgroundColor(Color.BLUE);
-        B.setBackgroundColor(Color.BLUE);
-        C.setBackgroundColor(Color.BLUE);
-        D.setBackgroundColor(Color.BLUE);
 
         //Button effect
         if(!Boolean.valueOf(isUser)) {
             A.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    A.setBackgroundColor(Color.GREEN);
-                    B.setBackgroundColor(Color.BLUE);
-                    C.setBackgroundColor(Color.BLUE);
-                    D.setBackgroundColor(Color.BLUE);
+                    A.setBackgroundResource(R.drawable.bu2);
+                    B.setBackgroundResource(R.drawable.bu1);
+                    C.setBackgroundResource(R.drawable.bu1);
+                    D.setBackgroundResource(R.drawable.bu1);
+//                    A.setBackgroundColor(Color.GREEN);
+//                    B.setBackgroundColor(Color.BLUE);
+//                    C.setBackgroundColor(Color.BLUE);
+//                    D.setBackgroundColor(Color.BLUE);
                     myAns = 0;
                 }
             });
             B.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    B.setBackgroundColor(Color.GREEN);
-                    A.setBackgroundColor(Color.BLUE);
-                    C.setBackgroundColor(Color.BLUE);
-                    D.setBackgroundColor(Color.BLUE);
+                    A.setBackgroundResource(R.drawable.bu1);
+                    B.setBackgroundResource(R.drawable.bu2);
+                    C.setBackgroundResource(R.drawable.bu1);
+                    D.setBackgroundResource(R.drawable.bu1);
                     myAns = 1;
                 }
             });
             C.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    C.setBackgroundColor(Color.GREEN);
-                    B.setBackgroundColor(Color.BLUE);
-                    A.setBackgroundColor(Color.BLUE);
-                    D.setBackgroundColor(Color.BLUE);
+                    A.setBackgroundResource(R.drawable.bu1);
+                    B.setBackgroundResource(R.drawable.bu1);
+                    C.setBackgroundResource(R.drawable.bu2);
+                    D.setBackgroundResource(R.drawable.bu1);
                     myAns = 2;
                 }
             });
             D.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    D.setBackgroundColor(Color.GREEN);
-                    B.setBackgroundColor(Color.BLUE);
-                    C.setBackgroundColor(Color.BLUE);
-                    A.setBackgroundColor(Color.BLUE);
+                    A.setBackgroundResource(R.drawable.bu1);
+                    B.setBackgroundResource(R.drawable.bu1);
+                    C.setBackgroundResource(R.drawable.bu1);
+                    D.setBackgroundResource(R.drawable.bu2);
                     myAns = 3;
                 }
             });
         }else {
             Question ques= mProperty.quesfullcontent.get(mProperty.countQues);
-            butt[ques.getRightans()].setBackgroundColor(Color.GREEN);
+            butt[ques.getRightans()].setBackgroundResource(R.drawable.bu2);
         }
         //
         runQues(mProperty.quesfullcontent);
@@ -119,7 +119,7 @@ public class InGameActivity extends AppCompatActivity {
             @Override
             public void onTick(long millisUntilFinished) {
                 int current=PBar.getProgress();
-                PBar.setProgress(current-1);
+                PBar.setProgress((int)millisUntilFinished*10/1000);
             }
             @Override
             public void onFinish() {
@@ -134,7 +134,7 @@ public class InGameActivity extends AppCompatActivity {
                 }
                 else gotoResult.putExtra("isUser",isUser);
                 gotoResult.putExtra("PIN",PIN);
-                gotoResult.putExtra("myName",myname);
+                gotoResult.putExtra("myname",myname);
                 //gotoResult.putExtra("index",WaitRoomActivity.countQues);
                 startActivity(gotoResult);//go to Result Activity
                 finish();

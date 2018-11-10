@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -36,13 +37,23 @@ public class ResultActivity extends AppCompatActivity {
     ListView ranklist;
     GraphView graph;
     int CorrectAns;
+//    ImageView d1;
+//    ImageView d2;
+//    ImageView d3;
+//    ImageView d4;
+    ImageView[] d=new ImageView[4];
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.result);
+
+
         NextorEndbutt=(Button)findViewById(R.id.NextorEnd);
         ranklist=(ListView)findViewById(R.id.ranklist);
-
+        d[0]=(ImageView)findViewById(R.id.den1);
+        d[1]=(ImageView)findViewById(R.id.den2);
+        d[2]=(ImageView)findViewById(R.id.den3);
+        d[3]=(ImageView)findViewById(R.id.den4);
 
         graph=(GraphView)findViewById(R.id.graph);
         graph.getGridLabelRenderer().setGridStyle( GridLabelRenderer.GridStyle.NONE );
@@ -59,39 +70,31 @@ public class ResultActivity extends AppCompatActivity {
         Intent lastintent=getIntent();
         isUser=lastintent.getStringExtra("isUser");
         PIN=lastintent.getStringExtra("PIN");
-        myname=lastintent.getStringExtra("myName");
+        myname=lastintent.getStringExtra("myname");
+
+        mSocket.on("receive result",on_receive);
+        mSocket.on("game finish",on_finish);
         if(Boolean.valueOf(isUser)){
-            //mSocket.on("next question",on_next_question);
             NextorEndbutt.setVisibility(View.VISIBLE);
         }else
             mSocket.on("listen to next question",on_listen);
-        mSocket.on("game finish",on_finish);
 
-        mSocket.on("receive result",on_receive);
+
+
         mSocket.emit("give me result",PIN,mProperty.countQues);
 
         CorrectAns=mProperty.quesfullcontent.get(mProperty.countQues).getRightans();
         mProperty.countQues++;
         if(mProperty.countQues>=mProperty.size) {
-            NextorEndbutt.setText("FINISH");
-            NextorEndbutt.setVisibility(View.VISIBLE);
+            if(!Boolean.valueOf(isUser)) NextorEndbutt.setVisibility(View.VISIBLE);
         }
-
-
     }
     @Override
     public void finish(){
         mSocket.off("game finish",on_finish);
         mSocket.off("listen to next question",on_listen);
         mSocket.off("receive result",on_receive);
-        ((Activity)mProperty.context).finish();
-        super.finish();
-
-    }
-    public void finish1(){
-        mSocket.off("game finish",on_finish);
-        mSocket.off("listen to next question",on_listen);
-        mSocket.off("receive result",on_receive);
+//        ((Activity)mProperty.context).finish();
         super.finish();
 
     }
@@ -104,10 +107,9 @@ public class ResultActivity extends AppCompatActivity {
                     Intent gotoIngame=new Intent(getApplicationContext(),InGameActivity.class);
                     gotoIngame.putExtra("PIN",PIN);
                     gotoIngame.putExtra("isUser",isUser);
-                    gotoIngame.putExtra("myName",myname);
+                    gotoIngame.putExtra("myname",myname);
                     startActivity(gotoIngame);
-                    //mSocket.off("listen to next question",on_listen);
-                    finish1();
+                    finish();
                 }
             });
         }
@@ -134,6 +136,7 @@ public class ResultActivity extends AppCompatActivity {
                     JSONArray namelist=(JSONArray) args[2];
                     ArrayList<Rank> rank=new ArrayList<Rank>();
                     try {
+                        if(namelist.length()==0) return;
                         for(int i=0;i< namelist.length();i++){
                             String name =namelist.get(i).toString();
                             String score =Scorelist.getString(name);
@@ -158,8 +161,9 @@ public class ResultActivity extends AppCompatActivity {
                         series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
                             @Override
                             public int get(DataPoint data) {
-                                if ((data.getX()-1-CorrectAns)==0)
-                                    return Color.GREEN;
+                                if ((data.getX()-1-CorrectAns)==0){
+                                    d[CorrectAns].setVisibility(View.VISIBLE);
+                                    return Color.GREEN;}
                                 else return Color.rgb(141,143,138);
                             }
                         });
@@ -179,14 +183,17 @@ public class ResultActivity extends AppCompatActivity {
             Intent gotoIngame=new Intent(getApplicationContext(),InGameActivity.class);
             gotoIngame.putExtra("PIN",PIN);
             gotoIngame.putExtra("isUser",isUser);
-            gotoIngame.putExtra("myName",myname);
+            gotoIngame.putExtra("myname",myname);
             startActivity(gotoIngame);
             finish();
         }
     }
+    public void Exit(View V){
+        if(Boolean.valueOf(isUser)) mSocket.emit("exit",PIN);
+        finish();
+    }
     public void finishallclient(){
-        //Toast.makeText(getApplicationContext(),isUser,Toast.LENGTH_LONG).show();
-       if(Boolean.valueOf(isUser)) {mSocket.emit("finish",PIN);}
+       if(Boolean.valueOf(isUser)) mSocket.emit("finish",PIN);
        else {
            finish();
        }
@@ -194,8 +201,6 @@ public class ResultActivity extends AppCompatActivity {
 }
 class RankSort implements Comparator<Rank>
 {
-    // Used for sorting in ascending order of
-    // roll number
     public int compare(Rank a, Rank b)
     {
         return -(Integer.valueOf(a.getScore()) - Integer.valueOf(b.getScore()));

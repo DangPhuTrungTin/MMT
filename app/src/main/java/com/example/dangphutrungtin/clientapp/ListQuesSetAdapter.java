@@ -53,6 +53,7 @@ public class ListQuesSetAdapter  extends ArrayAdapter<QuestionSet> {
             PlayButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     msocket.emit("createroom",IDuser,String.valueOf(position));
                     gotoWaitroom=new Intent(getContext(),WaitRoomActivity.class);
                     gotoWaitroom.putExtra("IDset",String.valueOf(position));

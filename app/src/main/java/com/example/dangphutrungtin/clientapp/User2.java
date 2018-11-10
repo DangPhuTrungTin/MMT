@@ -70,49 +70,45 @@ public class User2 extends AppCompatActivity implements QuesCustomDiaLog.QuesCus
     }
 
     @Override
-    public void applyTextsAddQues(String content, String ansA, String ansB, String ansC, String ansD, String rightAns) throws JSONException {
-        if(content.isEmpty()||ansA.isEmpty()||ansB.isEmpty()||ansC.isEmpty()||ansD.isEmpty()||rightAns.isEmpty()){
+    public void applyTextsAddQues(String content, String ansA, String ansB, String ansC, String ansD, int rightAns) throws JSONException {
+        if(content.isEmpty()||ansA.isEmpty()||ansB.isEmpty()||ansC.isEmpty()||ansD.isEmpty()){
             Toast.makeText(getApplicationContext(),"Khong the co khoang trong",Toast.LENGTH_LONG).show();
             return;
         }
-        try {
-            if(Integer.valueOf(rightAns)<1 || Integer.valueOf(rightAns)>4) throw new NumberFormatException();
-            quesfullcontent.add(new Question(String.valueOf(choice), content, ansA, ansB, ansC, ansD, Integer.valueOf(rightAns)-1));
-            ques.add(content);
-            adapter.notifyDataSetChanged();
-            String[] a = {content, ansA, ansB, ansC, ansD};
-            String[] b = {IDset, IDowner};
-            String where = "IDset='" + IDset + "' and IDowner='" + IDowner + "'";
-            String c1 = "'" + TextUtils.join("','", a) + "',";
-            String c3 = ",'" + TextUtils.join("','", b) + "'";
-            String right=String.valueOf(Integer.valueOf(rightAns)-1);
-            msocket.emit("add question", c1 + right + c3, where);
-        }catch (NumberFormatException e){
-            Toast.makeText(getApplicationContext(),"Sai Corrected Answer",Toast.LENGTH_LONG).show();
+        if(rightAns==-1){
+            Toast.makeText(getApplicationContext(), "Hay chon 1 dap an dung", Toast.LENGTH_LONG).show();
+            return;
         }
+        quesfullcontent.add(new Question(String.valueOf(choice), content, ansA, ansB, ansC, ansD, rightAns));
+        ques.add(content);
+        adapter.notifyDataSetChanged();
+        String[] a = {content, ansA, ansB, ansC, ansD};
+        String[] b = {IDset, IDowner};
+        String where = "IDset='" + IDset + "' and IDowner='" + IDowner + "'";
+        String c1 = "'" + TextUtils.join("','", a) + "',";
+        String c3 = ",'" + TextUtils.join("','", b) + "'";
+        msocket.emit("add question", c1 + rightAns + c3, where);
     }
 
     @Override
-    public void applyTexts(String content, String ansA, String ansB, String ansC, String ansD, String rightAns) throws JSONException {
-        if(content.isEmpty()||ansA.isEmpty()||ansB.isEmpty()||ansC.isEmpty()||ansD.isEmpty()||rightAns.isEmpty()) {
+    public void applyTexts(String content, String ansA, String ansB, String ansC, String ansD, int rightAns) throws JSONException {
+        if(content.isEmpty()||ansA.isEmpty()||ansB.isEmpty()||ansC.isEmpty()||ansD.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Khong the co khoang trong", Toast.LENGTH_LONG).show();
             return;
         }
-        try{
-            if(Integer.valueOf(rightAns)<1 || Integer.valueOf(rightAns)>4) throw new NumberFormatException();
-            quesfullcontent.set(choice,new Question(String.valueOf(choice),content,ansA,ansB,ansC,ansD,Integer.valueOf(rightAns)-1));
-            ques.set(choice,content);
-            adapter.notifyDataSetChanged();
-            String[] a={"IDquestion='"+choice,"IDset='"+IDset,"IDowner='"+IDowner};
-            String[] b={"Content='"+content,"AnsA='"+ansA,"AnsB='"+ansB,"AnsC='"+ansC,"AnsD='"+ansD,"RightAns="};
-            String where= TextUtils.join("' and ",a)+"'";
-            int right=Integer.valueOf(rightAns)-1;
-            String set=TextUtils.join("',",b)+String.valueOf(right);
-            msocket.emit("update question",set,where);
+        if(rightAns==-1){
+            Toast.makeText(getApplicationContext(), "Hay chon 1 dap an dung", Toast.LENGTH_LONG).show();
+            return;
         }
-        catch (NumberFormatException e){
-            Toast.makeText(getApplicationContext(),"Sai Corrected Answer",Toast.LENGTH_LONG).show();
-        }
+            //if(Integer.valueOf(rightAns)<1 || Integer.valueOf(rightAns)>4) throw new NumberFormatException();
+        quesfullcontent.set(choice, new Question(String.valueOf(choice), content, ansA, ansB, ansC, ansD, rightAns));
+        ques.set(choice, content);
+        adapter.notifyDataSetChanged();
+        String[] a = {"IDquestion='" + choice, "IDset='" + IDset, "IDowner='" + IDowner};
+        String[] b = {"Content='" + content, "AnsA='" + ansA, "AnsB='" + ansB, "AnsC='" + ansC, "AnsD='" + ansD, "RightAns="};
+        String where = TextUtils.join("' and ", a) + "'";
+        String set = TextUtils.join("',", b) + String.valueOf(rightAns);
+        msocket.emit("update question", set, where);
     }
     private Emitter.Listener on_list_questions = new Emitter.Listener() {
         @Override

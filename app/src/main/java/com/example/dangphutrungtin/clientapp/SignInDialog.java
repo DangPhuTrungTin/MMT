@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialogFragment;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -51,6 +52,7 @@ public class SignInDialog extends AppCompatDialogFragment {
                 });
         editTextUsername=view.findViewById(R.id.username);
         editTextPassword=view.findViewById(R.id.password);
+        editTextPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         return builder.create();
     }
     @Override

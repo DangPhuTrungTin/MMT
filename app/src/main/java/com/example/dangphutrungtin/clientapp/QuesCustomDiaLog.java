@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import org.json.JSONException;
 
@@ -18,8 +20,8 @@ public class QuesCustomDiaLog extends AppCompatDialogFragment {
     EditText editTextAnsB;
     EditText editTextAnsC;
     EditText editTextAnsD;
-    EditText editTextRightAns;
     Question question=null;
+    RadioGroup radioGroup;
     QuesCustomDiaLog.QuesCustomDialogListener listener;
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -42,7 +44,8 @@ public class QuesCustomDiaLog extends AppCompatDialogFragment {
                         String ansB=editTextAnsB.getText().toString().trim();
                         String ansC=editTextAnsC.getText().toString().trim();
                         String ansD=editTextAnsD.getText().toString().trim();
-                        String rightAns=editTextRightAns.getText().toString().trim();
+                        int checkedRadio=radioGroup.getCheckedRadioButtonId();
+                        int rightAns=radioGroup.indexOfChild(radioGroup.findViewById(checkedRadio));
                         try {
                             listener.applyTexts(Content,ansA,ansB,ansC,ansD,rightAns);
                         } catch (JSONException e) {
@@ -55,14 +58,15 @@ public class QuesCustomDiaLog extends AppCompatDialogFragment {
         editTextAnsB=view.findViewById(R.id.ansB);
         editTextAnsC=view.findViewById(R.id.ansC);
         editTextAnsD=view.findViewById(R.id.ansD);
-        editTextRightAns=view.findViewById(R.id.rightans);
+        radioGroup=view.findViewById(R.id.RG);
         if(question!=null) {
             editTextContent.setText(question.getContent());
             editTextAnsA.setText(question.getAns()[0]);
             editTextAnsB.setText(question.getAns()[1]);
             editTextAnsC.setText(question.getAns()[2]);
             editTextAnsD.setText(question.getAns()[3]);
-            editTextRightAns.setText(String.valueOf(question.getRightans()+1));
+            ((RadioButton)radioGroup.getChildAt(question.getRightans())).setChecked(true);
+            //editTextRightAns.setText(String.valueOf(question.getRightans()+1));
         }
         return builder.create();
     }
@@ -76,6 +80,6 @@ public class QuesCustomDiaLog extends AppCompatDialogFragment {
         }
     }
     public interface QuesCustomDialogListener{
-        void applyTexts(String content,String ansA,String ansB,String ansC,String ansD,String rightAns) throws JSONException;
+        void applyTexts(String content,String ansA,String ansB,String ansC,String ansD,int rightAns) throws JSONException;
     }
 }

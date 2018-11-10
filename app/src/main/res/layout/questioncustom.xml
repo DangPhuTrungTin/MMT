@@ -3,16 +3,8 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/rightans"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/ansD"
-        android:hint="Right Answer" />
-
-    <EditText
         android:id="@+id/ansC"
-        android:layout_width="match_parent"
+        android:layout_width="280dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/ansB"
@@ -20,7 +12,7 @@
 
     <EditText
         android:id="@+id/ansD"
-        android:layout_width="match_parent"
+        android:layout_width="280dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/ansC"
@@ -28,7 +20,7 @@
 
     <EditText
         android:id="@+id/ansB"
-        android:layout_width="match_parent"
+        android:layout_width="280dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/ansA"
@@ -36,7 +28,7 @@
 
     <EditText
         android:id="@+id/ansA"
-        android:layout_width="match_parent"
+        android:layout_width="280dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/content2"
@@ -49,4 +41,39 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:hint="Content" />
+
+    <RadioGroup
+        android:id="@+id/RG"
+        android:layout_width="wrap_content"
+        android:layout_height="213dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="29dp"
+        android:layout_toRightOf="@id/ansA"
+        android:layout_marginTop="40dp">
+
+        <RadioButton
+            android:id="@+id/R0"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1" />
+
+        <RadioButton
+            android:id="@+id/R1"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1" />
+
+        <RadioButton
+            android:id="@+id/R2"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1" />
+
+        <RadioButton
+            android:id="@+id/R3"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1" />
+    </RadioGroup>
 </RelativeLayout>

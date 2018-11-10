@@ -28,6 +28,7 @@ public class User1 extends AppCompatActivity implements AddQuesSetDialog.AddQues
     //static Intent goToQuestion;
     ArrayList<QuestionSet> sets;
     String IDuser;
+    String myname;
     public void clear(){
         sets.clear();
     }
@@ -39,6 +40,8 @@ public class User1 extends AppCompatActivity implements AddQuesSetDialog.AddQues
         setContentView(R.layout.listquestionset);
         Intent intent=getIntent();
         IDuser =intent.getStringExtra("ID");
+        myname =intent.getStringExtra("myname");
+
         //goToQuestion.putExtra("IDowner",IDuser);
         msocket.on("nhanpin",on_nhanpin);
         msocket.on("on_list_ques_set",on_list_ques_set);
@@ -51,17 +54,14 @@ public class User1 extends AppCompatActivity implements AddQuesSetDialog.AddQues
     }
 
     public void Logout(View v){
+        msocket.emit("logout",IDuser);
+        finish1();
+    }
+    public void finish1(){
         msocket.off("nhanpin",on_nhanpin);
         msocket.off("on_list_ques_set",on_list_ques_set);
         msocket.off("on_add_set",on_add_set);
-        msocket.emit("logout",IDuser);
-        finish();
-    }
-    @Override
-    public void finish(){
-        setResult(Activity.RESULT_OK);
         clear();
-        //msocket.emit("logout",IDuser);
         super.finish();
     }
 
@@ -73,7 +73,7 @@ public class User1 extends AppCompatActivity implements AddQuesSetDialog.AddQues
                 public void run() {
                     String PIN = args[0].toString();
                     ListQuesSetAdapter.gotoWaitroom.putExtra("PIN",PIN);
-                    //ListQuesAdapter.gotoWaitroom.putExtra("PIN",PIN);
+                    ListQuesSetAdapter.gotoWaitroom.putExtra("myname",myname);
                     startActivity(ListQuesSetAdapter.gotoWaitroom);
                 }
             });
