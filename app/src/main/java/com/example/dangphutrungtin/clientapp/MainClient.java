@@ -195,6 +195,10 @@ public class MainClient extends AppCompatActivity implements SignInDialog.Signin
         SignUpDialog signupdialog=new SignUpDialog();
         signupdialog.show(getSupportFragmentManager(),"signup");
     }
+    public void Freeset(View v){
+        Intent free_set_client=new Intent(this,FreeSetForUnKnownPerson.class);
+        startActivity(free_set_client);
+    }
     @Override
     public void finish(){
         mSocket.disconnect();

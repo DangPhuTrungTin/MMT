@@ -89,7 +89,7 @@ public class User1 extends AppCompatActivity implements AddQuesSetDialog.AddQues
                     String ID=args[1].toString();
                     if(isOK){
                         Toast.makeText(getApplicationContext(),"Thanh cong",Toast.LENGTH_LONG).show();
-                        sets.add(new QuestionSet(ID,mtitle));
+                        sets.add(new QuestionSet(ID,mtitle,IDuser));
                         adapter.notifyDataSetChanged();
                     }else
                         Toast.makeText(getApplicationContext(),"Vui long nhap lai",Toast.LENGTH_LONG).show();
@@ -107,7 +107,7 @@ public class User1 extends AppCompatActivity implements AddQuesSetDialog.AddQues
                     for ( int i=0;i<data.length();i++){
                         try {
                             JSONObject a=(JSONObject) data.get(i);
-                            sets.add(new QuestionSet(a.getString("IDset"),a.getString("title")));
+                            sets.add(new QuestionSet(a.getString("IDset"),a.getString("title"),a.getInt("public"),IDuser));
                             adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
