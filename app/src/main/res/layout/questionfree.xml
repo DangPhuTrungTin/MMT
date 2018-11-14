@@ -2,75 +2,64 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <EditText
+    <TextView
         android:id="@+id/ansC"
-        android:layout_width="280dp"
+        android:layout_width="match_parent"
+        android:textAlignment="center"
+        android:gravity="center"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/ansB"
+        android:background="#8F8E84"
+        android:textSize="15dp"
         android:hint="ansC" />
 
-    <EditText
+    <TextView
         android:id="@+id/ansD"
-        android:layout_width="280dp"
+        android:background="#BDBCAE"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/ansC"
+        android:textSize="15dp"
         android:hint="ansD" />
 
-    <EditText
+    <TextView
         android:id="@+id/ansB"
-        android:layout_width="280dp"
+        android:layout_width="match_parent"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:background="#BDBCAE"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
+        android:textSize="15dp"
         android:layout_below="@+id/ansA"
         android:hint="ansB" />
 
-    <EditText
+    <TextView
         android:id="@+id/ansA"
-        android:layout_width="280dp"
+        android:textSize="15dp"
+        android:background="#8F8E84"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/content2"
         android:hint="ansA" />
 
-    <EditText
+    <TextView
         android:id="@+id/content2"
+        android:textSize="15dp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:background="#A45EE8"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:hint="Content" />
 
-    <RadioGroup
-        android:id="@+id/RG"
-        android:layout_width="50dp"
-        android:layout_height="213dp"
-        android:layout_alignBottom="@+id/ansD"
-        android:layout_toEndOf="@+id/ansC">
-
-        <RadioButton
-            android:id="@+id/R0"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1" />
-
-        <RadioButton
-            android:id="@+id/R1"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1" />
-
-        <RadioButton
-            android:id="@+id/R2"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1" />
-
-        <RadioButton
-            android:id="@+id/R3"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1" />
-    </RadioGroup>
 </RelativeLayout>

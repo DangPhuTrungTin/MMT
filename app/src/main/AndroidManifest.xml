@@ -19,6 +19,7 @@
         <activity android:name=".WaitRoomActivity"></activity>
         <activity android:name=".User1"></activity>
         <activity android:name=".User2"></activity>
+        <activity android:name=".Anonymous"></activity>
         <activity android:name=".InGameActivity"></activity>
         <activity android:name=".ResultActivity"></activity>
         <activity android:name=".FreeSetForUnKnownPerson"></activity>

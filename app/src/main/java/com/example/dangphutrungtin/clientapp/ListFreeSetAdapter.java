@@ -35,6 +35,7 @@ public class ListFreeSetAdapter extends ArrayAdapter<FreeSet> {
             TextView name = (TextView) view.findViewById(R.id.ownername);
             TextView title=(TextView) view.findViewById(R.id.title);
             Button PlayButton=(Button)view.findViewById(R.id.PlayButton);
+            Button SeeButton=(Button)view.findViewById(R.id.eye);
 
             name.setText("Author: "+p.getOwnername());
             title.setText(p.getTitle());
@@ -49,7 +50,15 @@ public class ListFreeSetAdapter extends ArrayAdapter<FreeSet> {
                     gotoWaitroom.putExtra("isUser","true");
                 }
             });
-
+            SeeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent goToQuestion=new Intent(getContext(),Anonymous.class);
+                    goToQuestion.putExtra("IDset",p.getIDset());
+                    goToQuestion.putExtra("IDowner",p.getIDowner());
+                    context.startActivity(goToQuestion);
+                }
+            });
         }
         return view;
     }
